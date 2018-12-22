@@ -3,6 +3,7 @@
         <div class="logo">
         </div>
         <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+            <li nz-menu-item [nzSelected]="'HomeComponent' === currentComponent"><span><i nz-icon type="home"></i><span class="nav-text">Home</span></span></li>
             <li nz-submenu>
                 <span title><i nz-icon type="user"></i><span class="nav-text">User</span></span>
                 <ul>

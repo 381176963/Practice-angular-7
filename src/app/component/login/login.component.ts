@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     ) {
         const access_token = localStorage.getItem('access_token');
         if (!(access_token === null) || (access_token === '')) {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/layout/home']);
         }
     }
 
@@ -71,15 +71,17 @@ export class LoginComponent implements OnInit {
         password: string;
         remember: boolean;
     }) {
-        this.apiService.login(loginInfo)
-            .subscribe(
-                (data) => this.loginResponse(data)
-            );
+        // this.apiService.login(loginInfo)
+        //     .subscribe(
+        //         (data) => this.loginResponse(data)
+        //     );
+
+        localStorage.setItem('access_token', '12345678');
+        localStorage.setItem('refresh_token', '12345678');
+        this.router.navigate(['/layout/home']);
     }
 
     private loginResponse(responseData) {
-        console.log(responseData);
-
         this.golbalMessageService.showResponseGolbalMessage (responseData);
 
         if (responseData.hasOwnProperty('fes_result')) {
@@ -97,8 +99,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('refresh_token', responseData['return_data']['refresh_token']);
                     }
 
-                    // this.router.navigate(['/home']);
-                    this.router.navigateByUrl('home');
+                    this.router.navigate(['/layout/home']);
                 } else {
                     this.golbalMessageService.showErrorGolbalMessage ('服务器返回认证参数不完整');
                 }

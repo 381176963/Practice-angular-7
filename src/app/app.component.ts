@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -7,9 +6,7 @@ import {Router} from '@angular/router';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    public loginStatus: boolean;
-
-    constructor (private router: Router) {
+    constructor () {
         console.log(111);
     }
 }
