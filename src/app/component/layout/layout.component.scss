@@ -17,8 +17,9 @@
 }
 
 .logo {
-  background:url(/assets/images/logo.png) no-repeat 5px 5px;
-
-  //background-image: url(/assets/images/logo.png);
-  //border: none;
+  overflow: hidden;
+  background-image: url(/assets/images/logo.png);
+  background-repeat: no-repeat;
+  background-position: -1px -1px;
+  background-size: 77px 34px;
 }

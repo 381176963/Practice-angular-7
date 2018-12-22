@@ -71,24 +71,10 @@ export class LoginComponent implements OnInit {
         password: string;
         remember: boolean;
     }) {
-        // this.apiService.login(loginInfo)
-        //     .subscribe(
-        //         (data) => this.loginResponse(data)
-        //     );
-
-        const responseData = {
-            'fes_result': 'OK',
-            'return_data': {
-                'expires_in': 2592000,
-                'access_token': 'fcf4e44205b511e9b3da7085c27b56d3',
-                'refresh_token': 'fcf55ab205b511e9b9677085c27b56d3'
-            },
-            'error_code': null,
-            'error_type': null,
-            'error_msg': null
-        };
-
-        this.loginResponse(responseData);
+        this.apiService.login(loginInfo)
+            .subscribe(
+                (data) => this.loginResponse(data)
+            );
     }
 
     private loginResponse(responseData) {
