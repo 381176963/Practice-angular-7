@@ -71,14 +71,14 @@ export class LoginComponent implements OnInit {
         password: string;
         remember: boolean;
     }) {
-        // this.apiService.login(loginInfo)
-        //     .subscribe(
-        //         (data) => this.loginResponse(data)
-        //     );
+        this.apiService.login(loginInfo)
+            .subscribe(
+                (data) => this.loginResponse(data)
+            );
 
-        localStorage.setItem('access_token', '12345678');
-        localStorage.setItem('refresh_token', '12345678');
-        this.router.navigate(['/layout/home']);
+        // localStorage.setItem('access_token', '12345678');
+        // localStorage.setItem('refresh_token', '12345678');
+        // this.router.navigate(['/layout/home']);
     }
 
     private loginResponse(responseData) {

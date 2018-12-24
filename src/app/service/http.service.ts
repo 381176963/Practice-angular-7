@@ -9,20 +9,48 @@ import { LoginInfo } from '../data-struct/loginInfo';
 
 const http_base_url = 'http://127.0.0.1:8000/';
 const http_login_url = 'login';
+const http_get_home_url = 'getHomeInfo';
+const http_home_save_url = 'homeSave';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+const httpOptionsLogin = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+let httpOptions = {};
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class HttpService {
-    constructor( private http: HttpClient, private golobalMessage: NzMessageService ) { }
+    constructor( private http: HttpClient, private golobalMessage: NzMessageService ) {
+        const access_token = localStorage.getItem('access_token');
+        if ((access_token === null) || (access_token === '')) {
+            httpOptions = httpOptionsLogin;
+        } else {
+            httpOptions = {
+                headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Token': access_token })
+            };
+        }
+    }
 
     login(loginInfo) {
-        return this.http.post<any>((http_base_url + http_login_url), loginInfo, httpOptions)
+        return this.http.post<any>((http_base_url + http_login_url), loginInfo, httpOptionsLogin)
+            .pipe(
+                retry(1),
+                catchError((error) => this.handleError(error))
+            );
+    }
+
+    getHomeInfo() {
+        return this.http.post<any>((http_base_url + http_get_home_url), {}, httpOptions)
+            .pipe(
+                retry(1),
+                catchError((error) => this.handleError(error))
+            );
+    }
+
+    homeSave(saveData) {
+        return this.http.post<any>((http_base_url + http_home_save_url), saveData, httpOptions)
             .pipe(
                 retry(1),
                 catchError((error) => this.handleError(error))

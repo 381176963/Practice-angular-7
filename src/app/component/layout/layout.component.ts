@@ -9,10 +9,10 @@ import {switchMap} from 'rxjs/operators';
 })
 
 export class LayoutComponent {
-    private currentComponent: string;
+    private currentComponent: any;
     constructor(private router: Router, private route: ActivatedRoute) {
-        this.currentComponent = route.firstChild.component.name;
-        console.log(this.currentComponent);
+        this.currentComponent = route.firstChild.component['name'];
+        console.log(typeof(this.currentComponent));
         const access_token = localStorage.getItem('access_token');
         if ((access_token === null) || (access_token === '')) {
             this.router.navigate(['/login']);

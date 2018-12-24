@@ -13,6 +13,8 @@ import zh from '@angular/common/locales/zh';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { LockOutline, UserOutline } from '@ant-design/icons-angular/icons';
 
+import { QuillModule } from 'ngx-quill';
+
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { LayoutComponent } from './component/layout/layout.component';
@@ -35,7 +37,8 @@ registerLocaleData(zh);
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        QuillModule
     ],
     providers: [
         { provide: NZ_I18N, useValue: zh_CN },
