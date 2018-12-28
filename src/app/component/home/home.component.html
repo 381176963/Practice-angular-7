@@ -1,53 +1,55 @@
-<quill-editor [(ngModel)]="inputDate.richText">
-    <div quill-editor-toolbar>
-         <span class="ql-formats">
-            <select class="ql-header" [title]="'Format'">
-                <option value="0" selected></option>
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
-            </select>
-        </span>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" [nzDelay]="200">
+    <quill-editor [(ngModel)]="inputDate.richText">
+        <div quill-editor-toolbar>
+             <span class="ql-formats">
+                <select class="ql-header" [title]="'Format'">
+                    <option value="0" selected></option>
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                </select>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-bold" [title]="'Bold'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-bold" [title]="'Bold'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-italic" [title]="'Italic'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-italic" [title]="'Italic'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-underline" [title]="'Underline'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-underline" [title]="'Underline'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-link" [title]="'Link'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-link" [title]="'Link'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <select class="ql-align" [title]="'Aligment'">
-                <option selected></option>
-                <option value="center"></option>
-                <option value="right"></option>
-                <option value="justify"></option>
-            </select>
-        </span>
+            <span class="ql-formats">
+                <select class="ql-align" [title]="'Aligment'">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="right"></option>
+                    <option value="justify"></option>
+                </select>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-list" value="ordered" [title]="'List1'"></button>
-            <button class="ql-list" value="bullet" [title]="'List2'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-list" value="ordered" [title]="'List1'"></button>
+                <button class="ql-list" value="bullet" [title]="'List2'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-clean" [title]="'Clean'"></button>
-        </span>
+            <span class="ql-formats">
+                <button class="ql-clean" [title]="'Clean'"></button>
+            </span>
 
-        <span class="ql-formats">
-            <button class="ql-image" [title]="'Image'"></button>
-        </span>
-    </div>
-</quill-editor>
+            <span class="ql-formats">
+                <button class="ql-image" [title]="'Image'"></button>
+            </span>
+        </div>
+    </quill-editor>
+</nz-spin>
 
 <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle" class="margin-top-10">
     <div nz-col class="text-align-center" [nzSpan]="24/1">

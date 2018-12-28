@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../service/http.service';
 import {GolbalMessageService} from '../../service/golbal-message.service';
+import {ResponseCommonService} from '../../service/response-common.service';
 
 @Component({
     selector: 'app-home',
@@ -11,24 +12,23 @@ export class HomeComponent implements OnInit {
     inputDate: object = {};
 
     isLoadingOne = false;
+    isSpinning = true;
 
     constructor(
         private apiService: HttpService,
-        private golbalMessageService: GolbalMessageService
-    ) {
-    }
+        private golbalMessageService: GolbalMessageService,
+        private responseCommonService: ResponseCommonService
+    ) {}
 
     ngOnInit() {
-        // this.inputDate['richText'] = '您好啊';
         this.getHomeInfo();
     }
 
     getHomeInfo() {
-        // this.isLoadingOne = true;
-
         this.apiService.getHomeInfo()
             .subscribe(
-                (data) => this.getHomeInfoResponse(data)
+                (data) => this.getHomeInfoResponse(data),
+                error => this.getHomeInfoAbnormalResponse(error)
             );
     }
 
@@ -37,52 +37,33 @@ export class HomeComponent implements OnInit {
 
         this.apiService.homeSave(this.inputDate)
             .subscribe(
-                (data) => this.saveResponse(data)
+                (data) => this.saveResponse(data),
+                error => this.saveAbnormalResponse(error)
             );
     }
 
     private getHomeInfoResponse(responseData) {
-        console.log(responseData);
-        if (responseData.hasOwnProperty('fes_result')) {
-            if ('OK' === responseData['fes_result']) {
-                if (
-                    responseData.hasOwnProperty('return_data')
-                ) {
-                    if (
-                        responseData['return_data'].hasOwnProperty('homeData')
-                    ) {
-                        this.inputDate = responseData['return_data']['homeData'];
-                        console.log(this.inputDate);
-                    }
-                } else {
-                    this.golbalMessageService.showErrorGolbalMessage ('服务器返回认证参数不完整');
-                }
+        this.isSpinning = false;
+        this.responseCommonService.responseCommonProcessing(responseData);
+        if ('OK' === responseData['fes_result']) {
+            if (
+                responseData['return_data'].hasOwnProperty('homeData')
+            ) {
+                this.inputDate = responseData['return_data']['homeData'];
             }
         }
-        // this.inputDate['richText'] = responseData;
     }
 
     private saveResponse(responseData) {
         this.isLoadingOne = false;
-        this.golbalMessageService.showResponseGolbalMessage (responseData);
-
-        if (responseData.hasOwnProperty('fes_result')) {
-            if ('OK' === responseData['fes_result']) {
-                if (
-                    responseData.hasOwnProperty('return_data')
-                ) {
-
-                } else {
-                    this.golbalMessageService.showErrorGolbalMessage ('服务器返回认证参数不完整');
-                }
-            }
-        }
+        this.responseCommonService.responseCommonProcessing(responseData);
     }
 
-    // loadOne(): void {
-    //     this.isLoadingOne = true;
-    //     setTimeout(_ => {
-    //         this.isLoadingOne = false;
-    //     }, 1000);
-    // }
+    private getHomeInfoAbnormalResponse(error) {
+        this.isSpinning = false;
+    }
+
+    private saveAbnormalResponse(error) {
+        this.isLoadingOne = false;
+    }
 }

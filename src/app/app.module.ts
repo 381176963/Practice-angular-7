@@ -18,6 +18,8 @@ import { QuillModule } from 'ngx-quill';
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { LayoutComponent } from './component/layout/layout.component';
+import { PictureIndexComponent } from './component/picture-index/picture-index.component';
+import { PictureInfoComponent } from './component/picture-info/picture-info.component';
 
 const icons: IconDefinition[] = [ LockOutline, UserOutline ];
 
@@ -28,7 +30,9 @@ registerLocaleData(zh);
         AppComponent,
         LoginComponent,
         HomeComponent,
-        LayoutComponent
+        LayoutComponent,
+        PictureIndexComponent,
+        PictureInfoComponent
     ],
     imports: [
         BrowserModule,

@@ -4,6 +4,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './component/login/login.component';
 import {LayoutComponent} from './component/layout/layout.component';
 import {HomeComponent} from './component/home/home.component';
+import {PictureIndexComponent} from './component/picture-index/picture-index.component';
+import {PictureInfoComponent} from './component/picture-info/picture-info.component';
 
 const routes: Routes = [
     {
@@ -16,6 +18,8 @@ const routes: Routes = [
         children: [
             {path: '', redirectTo: 'home', pathMatch: 'full'},
             {path: 'home', component: HomeComponent},
+            {path: 'picture-index', component: PictureIndexComponent},
+            {path: 'picture-info', component: PictureInfoComponent},
         ]
     },
     {

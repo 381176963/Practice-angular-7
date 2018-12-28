@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 
 import { HttpService } from '../../service/http.service';
 import { GolbalMessageService } from '../../service/golbal-message.service';
+import {ResponseCommonService} from '../../service/response-common.service';
 
 @Component({
     selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
         private http: HttpClient,
         private apiService: HttpService,
         private golbalMessageService: GolbalMessageService,
+        private responseCommonService: ResponseCommonService,
         private router: Router
     ) {
         const access_token = localStorage.getItem('access_token');
@@ -82,12 +84,10 @@ export class LoginComponent implements OnInit {
     }
 
     private loginResponse(responseData) {
-        this.golbalMessageService.showResponseGolbalMessage (responseData);
-
-        if (responseData.hasOwnProperty('fes_result')) {
+        const responseCommonFlag = this.responseCommonService.responseCommonProcessing(responseData);
+        if (responseCommonFlag) {
             if ('OK' === responseData['fes_result']) {
                 if (
-                    responseData.hasOwnProperty('return_data') &&
                     responseData['return_data'].hasOwnProperty('access_token') &&
                     ('' !== responseData['return_data']['access_token'])
                 ) {
@@ -98,7 +98,6 @@ export class LoginComponent implements OnInit {
                     ) {
                         localStorage.setItem('refresh_token', responseData['return_data']['refresh_token']);
                     }
-
                     this.router.navigate(['/layout/home']);
                 } else {
                     this.golbalMessageService.showErrorGolbalMessage ('服务器返回认证参数不完整');

@@ -3,7 +3,14 @@
         <div class="logo">
         </div>
         <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-            <li nz-menu-item [nzSelected]="'HomeComponent' === currentComponent"><span><i nz-icon type="home"></i><span class="nav-text">Home</span></span></li>
+            <li nz-menu-item [nzSelected]="'HomeComponent' === currentComponent" routerLink="/layout/home"><span><i nz-icon type="home"></i><span class="nav-text">Home</span></span></li>
+            <li nz-submenu [nzOpen]="('PictureIndexComponent' === currentComponent) || ('PictureInfoComponent' === currentComponent)">
+                <span title><i nz-icon type="picture"></i><span class="nav-text">Picture</span></span>
+                <ul>
+                    <li nz-menu-item [nzSelected]="'PictureIndexComponent' === currentComponent" routerLink="/layout/picture-index">search</li>
+                    <li nz-menu-item [nzSelected]="'PictureInfoComponent' === currentComponent" routerLink="/layout/picture-info">info</li>
+                </ul>
+            </li>
             <li nz-submenu>
                 <span title><i nz-icon type="user"></i><span class="nav-text">User</span></span>
                 <ul>
@@ -24,8 +31,7 @@
     </nz-sider>
     <nz-layout>
         <nz-header style="background: #fff; padding:0;">
-            <i class="trigger" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'"
-               (click)="isCollapsed=!isCollapsed"></i>
+            <i class="trigger" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
         </nz-header>
         <nz-content style="margin:0 16px;">
             <nz-breadcrumb style="margin:16px 0;">
