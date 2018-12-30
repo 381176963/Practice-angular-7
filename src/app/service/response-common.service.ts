@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GolbalMessageService} from './golbal-message.service';
 import {ResponseCommonMessage} from '../message/response-common';
 
@@ -10,7 +10,8 @@ export class ResponseCommonService {
     private responseCommonMessage = ResponseCommonMessage;
     constructor(
         private golbalMessageService: GolbalMessageService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) {}
 
     /**
@@ -60,6 +61,7 @@ export class ResponseCommonService {
                 ) {
                     if ('4' === responseData['error_type']) {
                         localStorage.clear();
+                        localStorage.setItem('activated_route_root_snapshot_routerState_url', this.route.root.snapshot['_routerState'].url);
                         this.router.navigate(['/login']);
                     }
 

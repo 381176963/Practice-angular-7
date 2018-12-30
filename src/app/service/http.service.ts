@@ -11,6 +11,7 @@ const http_get_home_url = 'getHomeInfo';
 const http_home_save_url = 'homeSave';
 const http_picture_save_url = 'pictureSave';
 const http_picture_save_upload_url = 'pictureSaveUpload';
+const http_picture_list_url = 'pictureList';
 
 const httpOptionsLogin = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -59,8 +60,26 @@ export class HttpService {
             );
     }
 
+    uploadPicture(saveData) {
+        this.judgeAccessToken();
+        return this.http.post<any>((http_base_url + http_picture_save_upload_url), saveData, httpOptions)
+            .pipe(
+                retry(1),
+                catchError((error) => this.handleError(error))
+            );
+    }
+
     getSavePictureUploadUrl(): string {
         return http_base_url + http_picture_save_upload_url;
+    }
+
+    getPictureList() {
+        this.judgeAccessToken();
+        return this.http.post<any>((http_base_url + http_picture_list_url), {}, httpOptions)
+            .pipe(
+                retry(2),
+                catchError((error) => this.handleError(error))
+            );
     }
 
     private judgeAccessToken() {

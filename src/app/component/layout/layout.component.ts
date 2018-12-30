@@ -9,12 +9,14 @@ import {switchMap} from 'rxjs/operators';
 })
 
 export class LayoutComponent {
-    private currentComponent: any;
+    currentComponent: any;
+    goLogin = false;
     constructor(private router: Router, private route: ActivatedRoute) {
         this.currentComponent = route.firstChild.component['name'];
-        console.log(typeof(this.currentComponent));
         const access_token = localStorage.getItem('access_token');
         if ((access_token === null) || (access_token === '')) {
+            this.goLogin = true;
+            localStorage.setItem('activated_route_root_snapshot_routerState_url', this.route.root.snapshot['_routerState'].url);
             this.router.navigate(['/login']);
         }
     }

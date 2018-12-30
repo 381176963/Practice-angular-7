@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         private router: Router
     ) {
         const access_token = localStorage.getItem('access_token');
-        if (!(access_token === null) || (access_token === '')) {
+        if (!((access_token === null) || (access_token === ''))) {
             this.router.navigate(['/layout/home']);
         }
     }
@@ -77,10 +77,6 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 (data) => this.loginResponse(data)
             );
-
-        // localStorage.setItem('access_token', '12345678');
-        // localStorage.setItem('refresh_token', '12345678');
-        // this.router.navigate(['/layout/home']);
     }
 
     private loginResponse(responseData) {
@@ -98,7 +94,17 @@ export class LoginComponent implements OnInit {
                     ) {
                         localStorage.setItem('refresh_token', responseData['return_data']['refresh_token']);
                     }
-                    this.router.navigate(['/layout/home']);
+
+                    const activated_route_url = localStorage.getItem('activated_route_root_snapshot_routerState_url');
+                    console.log(activated_route_url);
+                    if (!((activated_route_url === null) || (activated_route_url === ''))) {
+                        localStorage.removeItem('activated_route_root_snapshot_routerState_url');
+                        console.log('aaaaa');
+                        this.router.navigateByUrl(activated_route_url);
+                    } else {
+                        console.log('bbbbb');
+                        this.router.navigate(['/layout/home']);
+                    }
                 } else {
                     this.golbalMessageService.showErrorGolbalMessage ('服务器返回认证参数不完整');
                 }

@@ -1,4 +1,18 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="validateForm">
+    <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzRequired nzFor="path">Photo</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+            <input class="hidden-domain" type="text" nz-input formControlName="path">
+            <nz-form-explain *ngIf="validateForm.get('path').dirty && validateForm.get('path').errors">Please upload your photo
+            </nz-form-explain>
+
+            <nz-upload [nzAction]="savePictureUploadUrl" [nzCustomRequest]="customReq">
+                <button nz-button>
+                    <i nz-icon type="upload"></i><span>Click to Upload</span>
+                </button>
+            </nz-upload>
+        </nz-form-control>
+    </nz-form-item>
     <nz-form-item>
         <nz-form-label [nzSpan]="4" nzRequired nzFor="name">Name</nz-form-label>
         <nz-form-control [nzSpan]="8">
@@ -8,40 +22,23 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <nz-form-label [nzSpan]="4" nzFor="nickname" [nzRequired]="validateForm.get('required')?.value">Nickname
+        <nz-form-label [nzSpan]="4" nzFor="type" [nzRequired]="validateForm.get('required')?.value">Nickname
         </nz-form-label>
         <nz-form-control [nzSpan]="8">
-            <input type="text" nz-input formControlName="nickname" placeholder="Please input your nickname">
-            <nz-form-explain *ngIf="validateForm.get('nickname').dirty && validateForm.get('nickname').errors">Please input your nickname
-            </nz-form-explain>
-        </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-        <nz-form-label [nzSpan]="4" nzRequired nzFor="picture">Picture</nz-form-label>
-        <nz-form-control [nzSpan]="8">
-            <input type="text" nz-input formControlName="picture" placeholder="Please input your picture">
-            <nz-form-explain *ngIf="validateForm.get('picture').dirty && validateForm.get('picture').errors">Please input your name
+            <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="type">
+                <nz-option nzValue="00" nzLabel="none"></nz-option>
+                <nz-option nzValue="01" nzLabel="people"></nz-option>
+                <nz-option nzValue="02" nzLabel="objects"></nz-option>
+                <nz-option nzValue="03" nzLabel="scenery"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('type').dirty && validateForm.get('type').errors">Please input your nickname
             </nz-form-explain>
         </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
         <nz-form-control [nzSpan]="8" [nzOffset]="4">
-            <button nz-button nzType="primary">Check</button>
+            <button nz-button nzType="primary" (click)="submitForm()" [nzLoading]="isLoadingOne">Submit</button>
         </nz-form-control>
     </nz-form-item>
 </form>
-
-
-<div class="clearfix">
-    <nz-upload [nzAction]="savePictureUploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview">
-        <i nz-icon type="plus"></i>
-        <div class="ant-upload-text">Upload</div>
-    </nz-upload>
-    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-        <ng-template #modalContent>
-            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-        </ng-template>
-    </nz-modal>
-</div>
